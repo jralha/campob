@@ -2,3 +2,4 @@ data/
 *.GRDECL
 *.grdecl
 eclipse_vision/
+PyGRDECL/
