@@ -1,0 +1,99 @@
+-- Generated [
+-- Format      : ECLIPSE keywords (grid geometry and properties) (ASCII)
+-- Exported by : Petrel 2015.5 (64-bit) Schlumberger
+-- User name   : joaor
+-- Date        : Tuesday, April 16 2019 01:21:45
+-- Project     : re_campob.pet
+-- Grid        : Structural grid 1
+-- Generated ]
+
+MAPUNITS                               -- Generated : Petrel
+  METRES /
+
+MAPAXES                                -- Generated : Petrel
+  324074.17 7492955.80 324074.17 7493955.80 325074.17 7493955.80 /
+
+GRIDUNIT                               -- Generated : Petrel
+  METRES /
+
+SPECGRID                               
+  285 77 543 1 F /
+
+COORDSYS                               -- Generated : Petrel
+  1 543 /
+
+INCLUDE                                -- Generated : Petrel
+'campob_COORD.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_ZCORN.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_ACTNUM.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_REGIONS_ALL_ZONES.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_PHIE.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_SWMMM195N240.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_SWMMM195N343.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_SWMMM218N343.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_SWMMM2N2.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_ILD.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_GR.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_RHOB.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_NPHI.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_AI.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_DISTANCE.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_OIL_WATER_CONTACT.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_SEISMIC_-_ANT_TRACKING.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_TOT_PAYFLAG.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_LOCAL_CALI.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_FROM_DIP_DIRECTION.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_FROM_DIP.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_FAULT_DENS.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_ELEVATION_GENERAL.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_BULK_VOLUME.GRDECL' /
+
+INCLUDE                                -- Generated : Petrel
+'campob_PROP_PAY_COLUMN.GRDECL' /
+
