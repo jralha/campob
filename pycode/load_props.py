@@ -1,14 +1,21 @@
+#!usr/bin/env python3
+
 #%% Libraries, settings and data folder
-from pycode.fun import *
+
+#General libs
 import pandas as pd
 import os
 
 project_folder = 'D:\\rucksack\\Jupyter Notebooks\\campob'
 os.chdir(project_folder)
 
+#Project funs
+from pycode.fun import gridTools
+
 #%% Get grid info
-main_grid_file = 'data\campob.GRDECL'
-info = grid_info(main_grid_file)
+main_grid_file = 'data\\campob.GRDECL'
+
+info = gridTools.grid_info(main_grid_file)
 xdim = info['XDIM'].iloc[0]
 ydim = info['YDIM'].iloc[0]
 zdim = info['ZDIM'].iloc[0]
@@ -47,9 +54,17 @@ prop_array = []
 n=1
 for prop in (props):
     print('Loading proprerty '+prop+' ['+str(n)+'/'+str(len(props))+']')
-    prop_array.append(get_prop_array('data\campob_PROP_'+prop+'.GRDECL'))
+    prop_array.append(gridTools.get_prop_array('data\\campob_PROP_'+prop+'.GRDECL'))
     n=n+1
 
 #%% Building Dataframe
-df = pd.DataFrame(prop_array)
-df.columns = props
+data = pd.DataFrame(prop_array)
+data.columns = props
+
+data_clean = data.loc[data['SW'] > -1 ]
+quissama = data_clean.loc[data_clean['region'] == 2]
+reservoir = quissama.loc[quissama['OWC'] > 0 ]
+
+#%% Output
+quissama.to_csv('csv_outs_new\\quis.csv')
+reservoir.to_csv('csv_outs_new\\res.csv')
