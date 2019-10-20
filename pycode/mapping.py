@@ -5,8 +5,8 @@ import numpy as np
 np.set_printoptions(suppress=True)
 plt.style.use('ggplot')
 
-#%% Data load
-res = pd.read_csv('campob\csv_correcao\cluster.csv')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 #%% Data load
+res = pd.read_csv('csv_correcao\\cluster.csv')
 
 #%% Functions
 
@@ -33,7 +33,7 @@ def plot_section_continuous(df,const_col,const_val,x,y,color_dim,cmap='viridis')
     plt.title(const_col+" = "+str(const_val))
     plt.colorbar(label=color_dim)
 
-#%%Defining good contants to plot.
+#%%Defining good constants to plot.
 med_i = np.median(res['i'])
 med_j = np.median(res['j'])
 med_k = np.median(res['k'])

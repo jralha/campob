@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 np.set_printoptions(suppress=True)
 plt.style.use('ggplot')
 #%%Data loading
-res = pd.read_csv('campob\\csv_outs\\res.csv')
+res = pd.read_csv('csv_outs\\res.csv')
 resRock = res[['GR','phie','RHOB']]
 
 #%% Clustering
@@ -78,5 +78,5 @@ for i in range(opt_k):
      col_name = "cluster "+str(i)
      res[col_name] = prob_g.T[i]
 
-res.to_csv('campob\csv_correcao\cluster.csv')
+res.to_csv('csv_correcao\\cluster.csv')
 
