@@ -5,8 +5,8 @@ import numpy as np
 np.set_printoptions(suppress=True)
 plt.style.use('ggplot')
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 #%% Data load
-res = pd.read_csv('csv_correcao\\cluster.csv')
+#%% Load Data                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   #%% Data load
+res = pd.read_csv('campob\\csv_correcao\\cluster_reorder.csv')
 
 #%% Functions
 
@@ -40,10 +40,12 @@ med_k = np.median(res['k'])
 
 
 #%%
-plot_section_continuous(res,'k',med_k,'i','j','cluster 1')
 plot_section_continuous(res,'k',med_k,'i','j','cluster 0')
+plot_section_continuous(res,'k',med_k,'i','j','cluster 1')
 plot_section_continuous(res,'k',med_k,'i','j','cluster 2')
 plot_section_discrete(res,'k',med_k,'i','j','GMM')
+plot_section_discrete(res,'k',med_k,'i','j','KMeans')
 plot_section_continuous(res,'k',med_k,'i','j','SW')
+plot_section_continuous(res,'k',med_k,'i','j','phie')
 
 #%%
