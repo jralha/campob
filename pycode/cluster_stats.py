@@ -7,7 +7,7 @@ pd.set_option('mode.chained_assignment', None)
 #%% Data load
 res = pd.read_csv('campob\\csv_correcao\\cluster.csv')
 
-#%% Define datasets, reorder clusters in order of Porosity and SW
+#%% Define datasets, reorder clusters in order of Porosity
 gmm = res[['RHOB','GR','phie','SW','ILD','GMM']]
 kme = res[['RHOB','GR','phie','SW','ILD','KMeans']]
 
