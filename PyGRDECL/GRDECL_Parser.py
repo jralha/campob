@@ -22,7 +22,19 @@ SupportKeyWords=[
     'PERMX' , 'PERMXY', 'PERMXZ', 
     'PERMYX', 'PERMY' , 'PERMYZ', 
     'PERMZX', 'PERMZY', 'PERMZ',
-    'SW_NPSL'
+    'SW_NPSL',
+    'REGIONS_ALL_ZONES',
+    'POROSITY-EFFECTIVE',
+    'SWNRM',
+    'GAMMARAY',
+    'P-SONIC',
+    'DENSITY',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
 ]
 
 KeyWordsDatatypes=[#Corrsponding data types

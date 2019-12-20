@@ -1,11 +1,9 @@
 #%%
-import numpy as np
-#from tqdm.auto import tqdm
-
-def prop_list(filename):
-    f0 = open(filename,'r').read().split('/')
-    return f0
-
-block =prop_list('props_new\\test.GRDECL')
+import os
+cwd = os.getcwd()
+os.chdir('PyGRDECL')
+from GRDECL2VTK import *
+os.chdir(cwd)
 
 # %%
+Model=GeologyModel(filename='props_new\\test.GRDECL)
