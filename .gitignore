@@ -1,4 +1,5 @@
-data/
-eclipse_vision/
-PyGRDECL/
-csv_outs/quis.csv
+old/data/
+old
+old/props_old/
+/old/csv_outs_old
+props_new/
