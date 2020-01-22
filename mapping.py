@@ -32,8 +32,10 @@ def plot_section(df,const_col,const_val,x,y,color_dim,orientation,line=None,plot
     elif plot_type == 'continuous':
         plt.scatter(plot_data[x],plot_data[y],c=plot_data[color_dim],cmap=cmap,s=sz)
         plt.colorbar(label=color_dim)
-    if line != None:
-        plt.plot(linex,liney,c='b')
+    if line != True:
+        line_data = plot_data.loc[plot_data['cellj'] == line]
+
+        plt.plot(plot_data[const_col],plot_data[const_val])
 
     
     plt.xlabel(x)
@@ -43,7 +45,7 @@ def plot_section(df,const_col,const_val,x,y,color_dim,orientation,line=None,plot
 
 
 #%%
-plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 0','depth',plot_type='continuous')
+plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 0','depth',plot_type='continuous',line=True)
 plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 1','depth',plot_type='continuous')
 plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 2','depth',plot_type='continuous')
 plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 1 ou 2','depth',plot_type='continuous')
