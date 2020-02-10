@@ -42,13 +42,16 @@ fs = sou.loc[ (sou['anttrracking'] > -0.7) & (sou['anttrracking'] < 1) ]
 # exit()
 
 # %%
-plt.scatter(res['ycoord'],res['anttrracking'],s=0.5,c='black')
-# plt.scatter(fs['ycoord'],fs['anttrracking'],s=0.5,c='black')
-plt.xlabel('Latitude')
-plt.ylabel('Ant-Tracking')
-plt.show()
+# plt.scatter(res['ycoord'],res['anttrracking'],s=1,c='black')
+# plt.xlabel('Latitude')
+# plt.ylabel('Ant-Tracking')
+# plt.show()
 
 # %%
-
+plt.scatter(res['xcoord'],res['ycoord'],s=0.3,c=res['dist_fault'],cmap='magma_r')
+plt.ylabel('Latitude')
+plt.xlabel('Longitude')
+plt.colorbar()
+plt.show()
 
 
