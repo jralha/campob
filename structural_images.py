@@ -48,10 +48,36 @@ fs = sou.loc[ (sou['anttrracking'] > -0.7) & (sou['anttrracking'] < 1) ]
 # plt.show()
 
 # %%
-plt.scatter(res['xcoord'],res['ycoord'],s=0.3,c=res['dist_fault'],cmap='magma_r')
-plt.ylabel('Latitude')
-plt.xlabel('Longitude')
-plt.colorbar()
+# plt.scatter(fs['xcoord'],fs['ycoord'],s=0.5,c=fs['dist_fault'],cmap='magma_r')
+# plt.scatter(fn['xcoord'],fn['ycoord'],s=0.5,c=fn['dist_fault'],cmap='magma_r')
+# plt.ylabel('Latitude')
+# plt.xlabel('Longitude')
+# plt.colorbar()
+# plt.show()
+
+#%%
+rng = range(-10,8)
+fracs=[]
+fracn=[]
+lims=[]
+for i in rng:
+    limiar = float(i/10)
+    lims.append(limiar)
+    nn = nor.loc[nor['anttrracking'] > limiar]
+    ss = sou.loc[sou['anttrracking'] > limiar]
+    ln = len(nn)
+    ls = len(ss)
+    t = ln+ls
+    if t != 0:
+        fracs.append(ls/t)
+        fracn.append(ln/t)
+    else:
+        fracs.append(0)
+        fracn.append(0)
+
+plt.plot(lims,fracn,label='Zona Norte')
+plt.plot(lims,fracs,label='Zona Sul')
+plt.legend()
+plt.xlabel('Limiar Mínimo de Ant-Tracking')
+plt.ylabel('% células Ant-Tracking > Limiar')
 plt.show()
-
-
