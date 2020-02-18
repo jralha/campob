@@ -1,4 +1,4 @@
-  #%%
+#%%
 import pandas as pd
 import numpy as np
 np.set_printoptions(suppress=True)
@@ -32,8 +32,12 @@ for n,zone in enumerate(zones):
     all_stats.append(stats)
 output=pd.concat(all_stats)
 
+#%%
 output.to_excel('dissertacao\\prop_stats.xlsx')
 
 
+
+# %%
+output
 
 # %%
