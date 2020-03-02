@@ -16,9 +16,41 @@ lats = res['ycoord']
 med = np.median(lats)
 res = res[feats]
 nor_bool = (lats > med)*1
-res['nor_bool'] = nor_bool
+zones=[]
+for i in nor_bool:
+    if i == 1:
+        zones.append('Norte')
+    else:
+        zones.append('Sul')
+res['Zona'] = zones
+res_sample=res.sample(1000)
+nor = res.loc[ res['Zona'] == 'Norte']
+sul = res.loc[ res['Zona'] == 'Sul' ]
+nor_s = res_sample.loc[ res_sample['Zona'] == 'Norte']
+sul_s = res_sample.loc[ res_sample['Zona'] == 'Sul' ]
 
-sns.pairplot(res,hue='nor_bool', plot_kws=dict(edgecolor="none",marker='.',s=0.05) ) 
+combs = list(itertools.combinations(feats,2))
+
+#%%
+# plt.figure()
+# n=1
+# for feat in feats:
+#     plt.subplot(1,len(feats),n)
+#     sns.distplot(nor[feat],hist=False,label='Norte')
+#     sns.distplot(sul[feat],hist=False,label='Sul')
+#     n=n+1
+# plt.show()
+# %%
+plt.figure()
+n=1
+for comb in combs:
+    X = comb[0]
+    Y = comb[1]
+    plt.subplot(10,2,n)
+    sns.kdeplot(nor[X],nor[Y],cmap="Reds", shade=True, shade_lowest=False)
+    n=n+1
+    plt.subplot(10,2,n)
+    sns.kdeplot(sul[X],sul[Y],cmap="Blues", shade=True, shade_lowest=False)
+    n=n+1
 plt.show()
-
 # %%
