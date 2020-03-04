@@ -12,6 +12,7 @@ plt.style.use('ggplot')
 feats=['gr','dt','rhob','phie']
 
 res = pd.read_csv('props_new\\res.csv')
+res['rhob'] = res['rhob']/1000
 lats = res['ycoord']
 med = np.median(lats)
 res = res[feats]
@@ -41,7 +42,7 @@ combs = list(itertools.combinations(feats,2))
 #     plt.yticks([])
 #     n=n+1
 # plt.show()
-# # %%
+# %%
 
 n=2
 for comb in combs:
