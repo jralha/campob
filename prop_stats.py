@@ -7,6 +7,8 @@ import seaborn as sns
 np.set_printoptions(suppress=True)
 pd.set_option('mode.chained_assignment', None)
 plt.style.use('ggplot')
+from scipy.stats import pearsonr
+from tqdm.auto import tqdm
 
 #%% Data load
 feats=['gr','dt','rhob','phie']
@@ -45,7 +47,7 @@ combs = list(itertools.combinations(feats,2))
 # %%
 
 n=2
-for comb in combs:
+for comb in (combs):
     plt.figure(figsize=[5,2.5])
     X = comb[0]
     Y = comb[1]
@@ -55,12 +57,13 @@ for comb in combs:
     plt.legend(facecolor='white')
     plt.ylabel(Y)
     plt.xlabel(X)
+    plt.title('R = '+str(np.round(pearsonr(nor[X],nor[Y])[0],2)))
     plt.subplot(1,2,2)
     sns.kdeplot(sul[X],sul[Y], shade=True, shade_lowest=False,cmap='Blues')
     plt.scatter(sul_s[X],sul_s[Y],alpha=0.15,label='Zona Sul',marker='.',s=1,c='black')
     plt.xlabel(X)
     plt.ylabel('')
-    plt.yticks([])
+    plt.title('R = '+str(np.round(pearsonr(sul[X],sul[Y])[0],4)))
     plt.legend(facecolor='white')
     plt.tight_layout()
     # plt.show()
