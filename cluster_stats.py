@@ -18,13 +18,13 @@ kme_phi = kme_describe[[('phie',  'mean')]]
 originalOrderK = list(kme_phi.index)
 sortedK = kme_phi.sort_values(('phie','mean'))
 newOrderK = list(sortedK.index)
-swapK = dict(zip(originalOrderK,newOrderK))
+swapK = dict(zip(newOrderK,originalOrderK))
 
 gmm_phi = gmm_describe[[('phie',  'mean')]]
 originalOrderG = list(gmm_phi.index)
 sortedG = gmm_phi.sort_values(('phie',  'mean'))
 newOrderG = list(sortedG.index)
-swapG = dict(zip(originalOrderG,newOrderG))
+swapG = dict(zip(newOrderG,originalOrderG))
 
 gmm['GMM'] = gmm['GMM'].map(swapG)
 kme['KMeans'] = kme['KMeans'].map(swapK)
@@ -49,9 +49,33 @@ gmm = res[['dt','gr','phie','rhob','GMM']]
 kme = res[['dt','gr','phie','rhob','KMeans']]
 kme_describe=kme.groupby('KMeans').describe()
 gmm_describe=gmm.groupby('GMM').describe()
+for col in kme_describe.columns:
+    if 'std' in col:
+        kme_describe[(col[0],'CV')] = kme_describe[col] / kme_describe[(col[0],'mean')]
+        gmm_describe[(col[0],'CV')] = gmm_describe[col] / gmm_describe[(col[0],'mean')]
+    if 'mean' not in col and 'CV' not in col:
+        kme_describe = kme_describe.drop(col,axis=1)[['dt','gr','phie','rhob']]
+        gmm_describe = gmm_describe.drop(col,axis=1)[['dt','gr','phie','rhob']]
+
 
 #%% Save files
 res.to_csv('props_new\\cluster_reorder.csv')
 kme_describe.to_csv('props_new\\kme_stats.csv')
 gmm_describe.to_csv('props_new\\gmm_stats.csv')
 #%%
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# %%
+props = ['dt','gr','phie','rhob']
+
+nplot=1
+plt.figure(figsize=[10,5])
+for prop in props:
+    plt.subplot(1,4,nplot)
+    sns.boxplot(data=kme,y=prop,x='KMeans')
+    plt.xlabel(prop)
+    nplot+=1
+plt.tight_layout()
+
+# %%

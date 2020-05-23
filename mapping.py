@@ -17,7 +17,7 @@ res['cluster 1 ou 2'] = 1-res['cluster 0']
 
 #%% Functions
 
-def plot_section(df,const_col,const_val,x,y,color_dim,orientation,line=None,plot_type=None,num_colors=None,cmap='magma',sz=15,savefile=None):
+def plot_section(df,const_col,const_val,x,y,color_dim,orientation,plot_type=None,num_colors=None,cmap='magma',sz=15,savefile=None):
     plot_data = df.loc[df[const_col] == const_val]
 
     if orientation == 'depth':
@@ -32,10 +32,6 @@ def plot_section(df,const_col,const_val,x,y,color_dim,orientation,line=None,plot
     elif plot_type == 'continuous':
         plt.scatter(plot_data[x],plot_data[y],c=plot_data[color_dim],cmap=cmap,s=sz)
         plt.colorbar(label=color_dim)
-    if line != True:
-        line_data = plot_data.loc[plot_data['cellj'] == line]
-
-        plt.plot(plot_data[const_col],plot_data[const_val])
 
     
     plt.xlabel(x)
@@ -45,17 +41,17 @@ def plot_section(df,const_col,const_val,x,y,color_dim,orientation,line=None,plot
 
 
 #%%
-plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 0','depth',plot_type='continuous',line=True)
-plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 1','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 2','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 1 ou 2','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','GMM','depth',plot_type='discrete',num_colors=3)
-plot_section(res,'cellk',med_k,'xcoord','ycoord','KMeans','depth',plot_type='discrete',num_colors=3)
-plot_section(res,'cellk',med_k,'xcoord','ycoord','sw','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','phie','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','rhob','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','gr','depth',plot_type='continuous')
-plot_section(res,'cellk',med_k,'xcoord','ycoord','dt','depth',plot_type='continuous')
+plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 0','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 1','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 2','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','cluster 1 ou 2','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','GMM','depth',plot_type='discrete',num_colors=3)
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','KMeans','depth',plot_type='discrete',num_colors=3)
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','sw','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','phie','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','rhob','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','gr','depth',plot_type='continuous')
+# plot_section(res,'cellk',med_k,'xcoord','ycoord','dt','depth',plot_type='continuous')
 
 #%%
 plot_section(res,'cellj',med_j,'xcoord','zcoord','cluster 0','vertical',plot_type='continuous')

@@ -46,53 +46,45 @@ combs = list(itertools.combinations(feats,2))
 # plt.show()
 # %%
 
-n=2
-for comb in (combs):
-    plt.figure(figsize=[5,2.5])
-    X = comb[0]
-    Y = comb[1]
-    plt.subplot(1,2,1)
-    sns.kdeplot(nor[X],nor[Y], shade=True, shade_lowest=False,cmap='Reds')
-    plt.scatter(nor_s[X],nor_s[Y],alpha=0.15,label='Zona Norte',marker='.',s=1,c='black')
-    plt.legend(facecolor='white')
-    plt.ylabel(Y)
-    plt.xlabel(X)
-    plt.title('R = '+str(np.round(pearsonr(nor[X],nor[Y])[0],2)))
-    plt.subplot(1,2,2)
-    sns.kdeplot(sul[X],sul[Y], shade=True, shade_lowest=False,cmap='Blues')
-    plt.scatter(sul_s[X],sul_s[Y],alpha=0.15,label='Zona Sul',marker='.',s=1,c='black')
-    plt.xlabel(X)
-    plt.ylabel('')
-    plt.title('R = '+str(np.round(pearsonr(sul[X],sul[Y])[0],4)))
-    plt.legend(facecolor='white')
-    plt.tight_layout()
-    # plt.show()
-    fname='temp'+str(n)+'.png'
-    plt.savefig(fname)
-    n=n+1
+# n=2
+# for comb in (combs):
+#     plt.figure(figsize=[5,2.5])
+#     X = comb[0]
+#     Y = comb[1]
+#     plt.subplot(1,2,1)
+#     sns.kdeplot(nor[X],nor[Y], shade=True, shade_lowest=False,cmap='Reds')
+#     plt.scatter(nor_s[X],nor_s[Y],alpha=0.15,label='Zona Norte',marker='.',s=1,c='black')
+#     plt.legend(facecolor='white')
+#     plt.ylabel(Y)
+#     plt.xlabel(X)
+#     plt.title('R = '+str(np.round(pearsonr(nor[X],nor[Y])[0],2)))
+#     plt.subplot(1,2,2)
+#     sns.kdeplot(sul[X],sul[Y], shade=True, shade_lowest=False,cmap='Blues')
+#     plt.scatter(sul_s[X],sul_s[Y],alpha=0.15,label='Zona Sul',marker='.',s=1,c='black')
+#     plt.xlabel(X)
+#     plt.ylabel('')
+#     plt.title('R = '+str(np.round(pearsonr(sul[X],sul[Y])[0],4)))
+#     plt.legend(facecolor='white')
+#     plt.tight_layout()
+#     # plt.show()
+#     fname='temp'+str(n)+'.png'
+#     plt.savefig(fname)
+#     n=n+1
 
 # %%
-# from mpl_toolkits.mplot3d import Axes3D
-# combs3 = list(itertools.combinations(feats,3))
+from mpl_toolkits.mplot3d import Axes3D
+X='rhob'
+Y='gr'
+Z='dt'
+cc='phie'
 
-# for comb in combs3[0:1]:
-#     X=comb[0]
-#     Y=comb[1]
-#     Z=comb[2]
-
-#     fig = plt.figure()
-#     ax = fig.add_subplot(121, projection='3d')
-#     ax.scatter(nor_s[X],nor_s[Y],nor_s[Z],marker='.',s=5,alpha=0.2,c='black')
-#     ax.set_xlabel(X)
-#     ax.set_ylabel(Y)
-#     ax.set_zlabel(Z)
-#     # plt.zlabel(Z)
-#     ax2 = fig.add_subplot(122, projection='3d')
-#     ax2.scatter(sul_s[X],sul_s[Y],sul_s[Z],marker='.',s=5,alpha=0.2,c='black')
-#     ax2.set_xlabel(X)
-#     ax2.set_ylabel(Y)
-#     ax2.set_zlabel(Z)
-#     # plt.zlabel(Z)
-#     plt.show()
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+im = ax.scatter(res_sample[X],res_sample[Y],res_sample[Z],marker='.',s=10,alpha=0.15,c=res_sample[Z])
+ax.set_xlabel('Densidade (RHOB) [g/cm³]')
+ax.set_ylabel('Raio Dama (GR) [gAPI]')
+ax.set_zlabel('Perfil Sônico (DT) [us/ft]')
+plt.colorbar(im,label='Perfil Sônico (DT) [us/ft]')
+plt.show()
 
 # %%
