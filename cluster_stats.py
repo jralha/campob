@@ -1,6 +1,9 @@
 #%% Libraries
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
 np.set_printoptions(suppress=True)
 pd.set_option('mode.chained_assignment', None)
 
@@ -59,23 +62,71 @@ for col in kme_describe.columns:
 
 
 #%% Save files
-res.to_csv('props_new\\cluster_reorder.csv')
-kme_describe.to_csv('props_new\\kme_stats.csv')
-gmm_describe.to_csv('props_new\\gmm_stats.csv')
-#%%
-import seaborn as sns
-import matplotlib.pyplot as plt
+# res.to_csv('props_new\\cluster_reorder.csv')
+# kme_describe.to_csv('props_new\\kme_stats.csv')
+# gmm_describe.to_csv('props_new\\gmm_stats.csv')
 
 # %%
 props = ['dt','gr','phie','rhob']
-
+cmap = plt.get_cmap('plasma',3).colors
 nplot=1
-plt.figure(figsize=[10,5])
+plt.figure(figsize=[8,8])
 for prop in props:
-    plt.subplot(1,4,nplot)
-    sns.boxplot(data=kme,y=prop,x='KMeans')
-    plt.xlabel(prop)
+    plt.subplot(2,2,nplot)
+    sns.boxplot(
+        data=gmm,
+        y=prop,
+        x='GMM',
+        showfliers=False,
+        showmeans=True,
+        palette=cmap,
+        meanprops=dict(marker="o",markerfacecolor='white', markersize=5,markeredgecolor='black'),     
+        )
+    plt.xlabel('Cluster')
+    if prop == 'dt':
+        plt.ylabel('DT (us/ft)')
+        plt.title('DT - GMM')
+    elif prop == 'gr':
+        plt.ylabel('GR (gAPI)')
+        plt.title('GR - GMM')
+    elif prop == 'phie':
+        plt.ylabel('PHIE (v/v)')
+        plt.title('PHIE - GMM')
+    elif prop == 'rhob':
+        plt.ylabel('RHOB (g/cm³)')
+        plt.title('RHOB - GMM')
     nplot+=1
 plt.tight_layout()
+
+# %%
+nplot=1
+plt.figure(figsize=[8,8])
+for prop in props:
+    plt.subplot(2,2,nplot)
+    sns.boxplot(
+        data=kme,
+        y=prop,
+        x='KMeans',
+        showfliers=False,
+        showmeans=True,
+        palette=cmap,
+        meanprops=dict(marker="o",markerfacecolor='white', markersize=5,markeredgecolor='black'),     
+        )
+    plt.xlabel('Cluster')
+    if prop == 'dt':
+        plt.ylabel('DT (us/ft)')
+        plt.title('DT - KMeans')
+    elif prop == 'gr':
+        plt.ylabel('GR (gAPI)')
+        plt.title('GR - KMeans')
+    elif prop == 'phie':
+        plt.ylabel('PHIE (v/v)')
+        plt.title('PHIE - KMeans')
+    elif prop == 'rhob':
+        plt.ylabel('RHOB (g/cm³)')
+        plt.title('RHOB - KMeans')
+    nplot+=1
+plt.tight_layout()
+
 
 # %%
