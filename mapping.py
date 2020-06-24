@@ -2,6 +2,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.interpolate import griddata
+import pyqtgraph as pg
+pg.setConfigOption('background', 'w')
+pg.setConfigOption('foreground', 'k')
 np.set_printoptions(suppress=True)
 plt.style.use('ggplot')
 
@@ -61,13 +65,13 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
         ax2.set_yticklabels(labels=[str(minz),str(maxz)])
         ax2.set_xticklabels(labels=['0',str(hyp/2),str(hyp)])
         ax2.set_title('Perfil')
+        ax1.plot(line[x],line[y],c='red',label='Perfil')
 
     else:
         ax1 = fig.add_subplot(gs[:,:])
 
     propmap = ax1.scatter(plot_data[x],plot_data[y],c=plot_data[color_dim],cmap=c_map,s=10)
     
-    ax1.plot(line[x],line[y],c='red',label='Perfil')
     ax1.set_xlabel('Longitude')
     ax1.set_ylabel('Latitude')
     ax1.set_title('Profundidade = '+str(np.round(depth,2))+'m')
@@ -86,6 +90,18 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 
     plt.tight_layout()
 
+#%%
+def plot_map_qt(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap='plasma',savefile=None):
+    const_val = depth
+    color_dim = prop
+
+    plot_data = df.loc[df[const_col] == const_val]
+    depth = np.mean(plot_data['zcoord'])
+    line = plot_data.loc[plot_data['cellj'] == np.median(plot_data['cellj'])]
+
+    x = plot_data[x].values
+    y = plot_data[y].values
+    pg.plot(x, y, pen=None, symbol='o')
 
 # plot_map(res,med_k,'cluster 0',plot_type='continuous')
 # plot_map(res,med_k,'cluster 1',plot_type='continuous')
