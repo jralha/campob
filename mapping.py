@@ -2,7 +2,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.interpolate import griddata
 import matplotlib.tri as tri
 np.set_printoptions(suppress=True)
 plt.style.use('ggplot')
@@ -19,11 +18,11 @@ res['cluster 1 ou 2'] = 1-res['cluster 0']
 
 #%% Functions
 
-def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap='plasma',savefile=None):
+def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap='Accent_r',savefile=None):
     const_val = depth
     color_dim = prop
     plot_data = df.loc[df[const_col] == const_val]
-    # sample_size=100
+    # sample_size=1000
     # plot_data = plot_data.sample(n=sample_size)
     depth = np.mean(plot_data['zcoord'])
     line = plot_data.loc[plot_data['cellj'] == np.median(plot_data['cellj'])]
@@ -42,6 +41,7 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 
     if profile == True:
         prof_data = df.loc[df['cellj'] == np.median(plot_data['cellj'])]
+        # sample_size=1000
         # prof_data = prof_data.sample(n=sample_size)
 
         minz = np.min(prof_data['zcoord'])
@@ -57,12 +57,10 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 
         ax1 = fig.add_subplot(gs[0:35,:])
         ax2 = fig.add_subplot(gs[43:,:])
-        px = prof_data[x]
-        py = prof_data['cellk']
-        pz = prof_data[color_dim]+0.0001
-        ax2.scatter(px,py,c=pz,cmap=c_map,s=3)
-
-        # ax2.tricontourf(px,py,pz,cmap=c_map)
+        px = prof_data[x].values
+        py = prof_data['cellk'].values
+        pz = prof_data[color_dim].values
+        ax2.scatter(px,py,c=pz,cmap=c_map,alpha=0.55,marker='.',s=50)
         
         ax2.set_xlabel('Distância (m)')
         ax2.set_ylabel('Profundidade (m)')
@@ -76,20 +74,11 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
     else:
         ax1 = fig.add_subplot(gs[:,:])
 
+
     px = plot_data[x].values
     py = plot_data[y].values
-    pz = plot_data[color_dim].values+0.001
-    alpha=0.1
-    triang = tri.Triangulation(px,py)
-    triangles = triang.triangles
-    xtri = px[triangles] - np.roll(px[triangles], 1, axis=1)
-    ytri = py[triangles] - np.roll(py[triangles], 1, axis=1)
-    maxi = np.max(np.sqrt(xtri**2 + ytri**2), axis=1)
-    mask=(maxi > alpha)
-
-
-    propmap = ax1.scatter(px,py,c=pz,cmap=c_map,s=10)
-    # propmap = ax1.tricontourf(triang,pz,mask=mask,cmap=c_map)
+    pz = plot_data[color_dim].values
+    propmap = ax1.scatter(px,py,c=pz,cmap=c_map,marker='.',s=50)
 
     ax1.set_xlabel('Longitude')
     ax1.set_ylabel('Latitude')
@@ -114,7 +103,7 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 # plot_map(res,med_k,'cluster 2',plot_type='continuous')
 # plot_map(res,med_k,'cluster 1 ou 2',plot_type='continuous',cbarlabel='Probabilidade Cluster 1 ou 2')
 plot_map(res,med_k,'GMM',plot_type='discrete',cbarlabel='Clusters Gussian Mixture Model')
-plot_map(res,med_k,'KMeans',plot_type='discrete',cbarlabel='Clusters K-Means')
+# plot_map(res,med_k,'KMeans',plot_type='discrete',cbarlabel='Clusters K-Means')
 # plot_map(res,med_k,'sw',plot_type='continuous')
 # plot_map(res,med_k,'phie',plot_type='continuous')
 # plot_map(res,med_k,'rhob',plot_type='continuous')
