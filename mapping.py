@@ -3,16 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import griddata
-import pyqtgraph as pg
-pg.setConfigOption('background', 'w')
-pg.setConfigOption('foreground', 'k')
+import matplotlib.tri as tri
 np.set_printoptions(suppress=True)
 plt.style.use('ggplot')
 
 #%% Load Data                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   #%% Data load
 res = pd.read_csv('props_new\\cluster_reorder.csv')
 
-#%%Defining good constants to plot.
+#%%Defining constants to plot.
 med_i = np.median(res['celli'])
 med_j = np.median(res['cellj'])
 med_k = np.median(res['cellk'])
@@ -20,11 +18,13 @@ med_k = np.median(res['cellk'])
 res['cluster 1 ou 2'] = 1-res['cluster 0']
 
 #%% Functions
+
 def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap='plasma',savefile=None):
     const_val = depth
     color_dim = prop
-
     plot_data = df.loc[df[const_col] == const_val]
+    # sample_size=100
+    # plot_data = plot_data.sample(n=sample_size)
     depth = np.mean(plot_data['zcoord'])
     line = plot_data.loc[plot_data['cellj'] == np.median(plot_data['cellj'])]
 
@@ -42,6 +42,7 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 
     if profile == True:
         prof_data = df.loc[df['cellj'] == np.median(plot_data['cellj'])]
+        # prof_data = prof_data.sample(n=sample_size)
 
         minz = np.min(prof_data['zcoord'])
         maxz = np.max(prof_data['zcoord'])
@@ -54,10 +55,15 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
         maxx = np.max(prof_data[x])
         medx = np.median(prof_data[x])
 
-
         ax1 = fig.add_subplot(gs[0:35,:])
         ax2 = fig.add_subplot(gs[43:,:])
-        ax2.scatter(prof_data[x],prof_data['cellk'],c=prof_data[color_dim],cmap=c_map,s=3)
+        px = prof_data[x]
+        py = prof_data['cellk']
+        pz = prof_data[color_dim]+0.0001
+        ax2.scatter(px,py,c=pz,cmap=c_map,s=3)
+
+        # ax2.tricontourf(px,py,pz,cmap=c_map)
+        
         ax2.set_xlabel('Distância (m)')
         ax2.set_ylabel('Profundidade (m)')
         ax2.set_yticks(ticks=[mink,maxk])
@@ -70,8 +76,21 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
     else:
         ax1 = fig.add_subplot(gs[:,:])
 
-    propmap = ax1.scatter(plot_data[x],plot_data[y],c=plot_data[color_dim],cmap=c_map,s=10)
-    
+    px = plot_data[x].values
+    py = plot_data[y].values
+    pz = plot_data[color_dim].values+0.001
+    alpha=0.1
+    triang = tri.Triangulation(px,py)
+    triangles = triang.triangles
+    xtri = px[triangles] - np.roll(px[triangles], 1, axis=1)
+    ytri = py[triangles] - np.roll(py[triangles], 1, axis=1)
+    maxi = np.max(np.sqrt(xtri**2 + ytri**2), axis=1)
+    mask=(maxi > alpha)
+
+
+    propmap = ax1.scatter(px,py,c=pz,cmap=c_map,s=10)
+    # propmap = ax1.tricontourf(triang,pz,mask=mask,cmap=c_map)
+
     ax1.set_xlabel('Longitude')
     ax1.set_ylabel('Latitude')
     ax1.set_title('Profundidade = '+str(np.round(depth,2))+'m')
@@ -89,19 +108,6 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
     cb.ax.tick_params(labelsize='large')
 
     plt.tight_layout()
-
-#%%
-def plot_map_qt(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap='plasma',savefile=None):
-    const_val = depth
-    color_dim = prop
-
-    plot_data = df.loc[df[const_col] == const_val]
-    depth = np.mean(plot_data['zcoord'])
-    line = plot_data.loc[plot_data['cellj'] == np.median(plot_data['cellj'])]
-
-    x = plot_data[x].values
-    y = plot_data[y].values
-    pg.plot(x, y, pen=None, symbol='o')
 
 # plot_map(res,med_k,'cluster 0',plot_type='continuous')
 # plot_map(res,med_k,'cluster 1',plot_type='continuous')
