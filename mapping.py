@@ -18,7 +18,7 @@ res['cluster 1 ou 2'] = 1-res['cluster 0']
 
 #%% Functions
 
-def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap='Accent_r',savefile=None):
+def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=None,profile=True,plot_type=None,num_colors=3,cmap=None,savefile=None):
     const_val = depth
     color_dim = prop
     plot_data = df.loc[df[const_col] == const_val]
@@ -28,8 +28,10 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
     line = plot_data.loc[plot_data['cellj'] == np.median(plot_data['cellj'])]
 
     if plot_type == 'discrete': 
+        if cmap == None: cmap = 'Accent_r'
         c_map = plt.get_cmap(cmap, num_colors)
     elif plot_type == 'continuous':
+        if cmap == None: cmap = 'viridis'
         c_map = plt.get_cmap(cmap)
     
     if profile == False:
@@ -78,7 +80,7 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
     px = plot_data[x].values
     py = plot_data[y].values
     pz = plot_data[color_dim].values
-    propmap = ax1.scatter(px,py,c=pz,cmap=c_map,marker='.',s=50)
+    propmap = ax1.scatter(px,py,c=pz,cmap=c_map,marker='.',s=50,alpha=0.55)
 
     ax1.set_xlabel('Longitude')
     ax1.set_ylabel('Latitude')
@@ -103,7 +105,7 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 # plot_map(res,med_k,'cluster 2',plot_type='continuous')
 # plot_map(res,med_k,'cluster 1 ou 2',plot_type='continuous',cbarlabel='Probabilidade Cluster 1 ou 2')
 plot_map(res,med_k,'GMM',plot_type='discrete',cbarlabel='Clusters Gussian Mixture Model')
-# plot_map(res,med_k,'KMeans',plot_type='discrete',cbarlabel='Clusters K-Means')
+plot_map(res,med_k,'KMeans',plot_type='discrete',cbarlabel='Clusters K-Means')
 # plot_map(res,med_k,'sw',plot_type='continuous')
 # plot_map(res,med_k,'phie',plot_type='continuous')
 # plot_map(res,med_k,'rhob',plot_type='continuous')
