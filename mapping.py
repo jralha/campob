@@ -100,6 +100,7 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 
     plt.tight_layout()
 
+#%%
 # plot_map(res,med_k,'cluster 0',plot_type='continuous')
 # plot_map(res,med_k,'cluster 1',plot_type='continuous')
 # plot_map(res,med_k,'cluster 2',plot_type='continuous')
