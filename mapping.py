@@ -8,6 +8,7 @@ plt.style.use('ggplot')
 
 #%% Load Data                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   #%% Data load
 res = pd.read_csv('props_new\\cluster_reorder.csv')
+res['rhob'] = res['rhob']/100
 
 #%%Defining constants to plot.
 med_i = np.median(res['celli'])
@@ -102,16 +103,25 @@ def plot_map(df,depth,prop,const_col='cellk',x='xcoord',y='ycoord',cbarlabel=Non
 
 #%%
 # plot_map(res,med_k,'cluster 0',plot_type='continuous')
-# plot_map(res,med_k,'cluster 1',plot_type='continuous')
-# plot_map(res,med_k,'cluster 2',plot_type='continuous')
-# plot_map(res,med_k,'cluster 1 ou 2',plot_type='continuous',cbarlabel='Probabilidade Cluster 1 ou 2')
-plot_map(res,med_k,'GMM',plot_type='discrete',cbarlabel='Clusters Gussian Mixture Model')
-plot_map(res,med_k,'KMeans',plot_type='discrete',cbarlabel='Clusters K-Means')
-# plot_map(res,med_k,'sw',plot_type='continuous')
+plot_map(res,med_k,'cluster 1',plot_type='continuous')
+plot_map(res,med_k,'cluster 2',plot_type='continuous')
+plot_map(res,med_k,'cluster 1 ou 2',plot_type='continuous',cbarlabel='Probabilidade Cluster 1 ou 2')
+# plot_map(res,med_k,'GMM',plot_type='discrete',cbarlabel='Clusters Gussian Mixture Model')
+# plot_map(res,med_k,'KMeans',plot_type='discrete',cbarlabel='Clusters K-Means')
+plot_map(res,med_k,'v',plot_type='continuous')
 # plot_map(res,med_k,'phie',plot_type='continuous')
 # plot_map(res,med_k,'rhob',plot_type='continuous')
 # plot_map(res,med_k,'gr',plot_type='continuous')
 # plot_map(res,med_k,'dt',plot_type='continuous')
 
+
+# %%
+res['sw_r'] = (res['sw']-1)*-1
+res['test'] = res['cluster 1 ou 2']*res['sw_r']
+res['v'] = res['bulkvolume']*res['phie']*res['sw_r']
+
+
+# %%
+plt.scatter(res['v'],res['cluster 1 ou 2'])
 
 # %%

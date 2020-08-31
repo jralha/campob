@@ -9,6 +9,7 @@ pd.set_option('mode.chained_assignment', None)
 
 #%% Data load
 res = pd.read_csv('props_new\\cluster.csv')
+res['rhob'] = res['rhob']/1000
 
 #%% Define datasets, reorder clusters in order of Porosity
 gmm = res[['dt','gr','phie','rhob','GMM']]
@@ -68,7 +69,7 @@ for col in kme_describe.columns:
 
 # %%
 props = ['dt','gr','phie','rhob']
-cmap = plt.get_cmap('plasma',3).colors
+cmap = plt.get_cmap('Accent_r',3).colors
 nplot=1
 plt.figure(figsize=[8,8])
 for prop in props:
@@ -115,16 +116,16 @@ for prop in props:
     plt.xlabel('Cluster')
     if prop == 'dt':
         plt.ylabel('DT (us/ft)')
-        plt.title('DT - KMeans')
+        plt.title('DT')
     elif prop == 'gr':
         plt.ylabel('GR (gAPI)')
-        plt.title('GR - KMeans')
+        plt.title('GR')
     elif prop == 'phie':
         plt.ylabel('PHIE (v/v)')
-        plt.title('PHIE - KMeans')
+        plt.title('PHIE')
     elif prop == 'rhob':
         plt.ylabel('RHOB (g/cm³)')
-        plt.title('RHOB - KMeans')
+        plt.title('RHOB')
     nplot+=1
 plt.tight_layout()
 
