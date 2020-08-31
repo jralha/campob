@@ -46,9 +46,9 @@ for algo in algos:
         vols.append(vol_case(slc,slc['phie'],slc['sw'],1))
 #Case 4 - Boolean GMM Class not 0
 vb4 = vols[-1][0]+vols[-2][0]+vols[-3][0]
-vp4 = vols[-1][0]+vols[-2][0]+vols[-3][0]
-oip4 = vols[-2][0]+vols[-3][0]
-hcpv4 = vols[-2][0]+vols[-3][0]
+vp4 = vols[-1][1]+vols[-2][1]+vols[-3][1]
+oip4 = vols[-1][2]+vols[-2][2]+vols[-3][2]
+hcpv4 = vols[-2][3]+vols[-3][3]
 case4 = (vb4,vp4,oip4,hcpv4)
 vols = vols[:4]+[case4]+vols[4:]
 
@@ -69,6 +69,6 @@ cases = ['Melani',
 vols['Case'] = pd.Series(cases)
 
 #%%
-vols.to_csv('props_new\\volume_cases.csv')
+vols.to_csv('props_new\\volume_cases0.csv')
 
 # %%
