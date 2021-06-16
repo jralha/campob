@@ -1,3 +1,5 @@
 # campob
 
-General Repo for vertioning stuff done during my masters.
+General Repo for versioning stuff done during my masters.
+
+Abandoned now.
